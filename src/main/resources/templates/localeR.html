@@ -1,0 +1,6 @@
+<i class="fas fa-globe-americas"></i>
+<select id="locales">
+    <option th:selected="${#locale == new java.util.Locale('en')}" value="en" th:text="#{lang.eng}"></option>
+    <option th:selected="${#locale == new java.util.Locale('ua')}" value="ua" th:text="#{lang.ua}"></option>
+</select>
+

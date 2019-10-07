@@ -1,0 +1,70 @@
+<!doctype html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Order</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+    </head>
+    <body>
+
+        <div class="container">
+            <th:block th:include="/navigationBarMainPage"></th:block>
+
+            <h1>[[ #{orderNum} ]]: [[ ${orderId} ]]</h1>
+            <h3 th:unless="${notEnought}==null" style="color: red" th:text="#{notEnought}"></h3>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th th:text="#{dish}">name of Dish</th>
+                        <th th:text="#{price}">price of dish</th>
+                        <th th:text="#{amAdded}">Amount added</th>
+                        <th th:text="#{delete}">delete</th>
+
+                    </tr>
+                </thead>
+                <tr th:each="entry: ${map}">
+                    <td th:if="#{lang }== '??lang_en??'">[[ ${entry.key.name} ]]</td>
+                    <td th:unless="#{lang }== '??lang_en??'" th:text="${entry.key.nameUkr}"></td>
+                    <td th:text="${entry.key.price}"></td>
+                    <td th:text="${entry.value}"></td>
+                    <td>
+                        <form th:action="@{/order/removeD}" method="post">
+                            <button type="submit" value="Registrate" class="btn btn-info"
+                                    style="color: black" name="name" th:value="${entry.key.name}"
+                                    th:text="#{delete}">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <h2 th:text="#{price}"></h2>
+            <h3 style="color: brown" th:text="${amount}"></h3>
+            <form th:action="@{/order/addedOrder}" method="post">
+                <button th:if="${notEnought}==null" type="submit" value="Registrate" class="btn btn-info"
+                        style="margin-top:30px;color: black" name="actA" th:text="#{confirm}">
+                </button>
+            </form>
+            <!--<ul>
+                <li th:each="entry: ${map}">
+                    <span th:text="${entry.key.name}"></span> = <span th:text="${entry.value}"></span>
+                </li>
+            </ul>-->
+            <script type="text/javascript" src="/js/locale.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                    crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+                    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+                    crossorigin="anonymous"></script>
+        </div>
+    </body>
+    </html>

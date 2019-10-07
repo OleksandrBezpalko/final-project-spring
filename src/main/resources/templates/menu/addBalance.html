@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="#{menu}">Document</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+    </head>
+    <body>
+
+        <div class="container">
+            <th:block th:include="/navigationBarMainPage"></th:block>
+            <h3 th:unless="${notEnoughtMoney}==null" style="color: red" th:text="#{notEnoughtMoney}"></h3>
+            <text th:if="${moneyBalance}==null"></text>
+            <h1 th:unless="${moneyBalance}==null" th:text="#{uBalance}+' '+${moneyBalance}"></h1>
+
+
+            <form th:action="@{/addBalance}" method="post"
+                  style="max-width: 600px;margin-bottom: 30px;margin-top: 50px" ng-submit="form.$valid"
+                  th:object="${balanceDto}">
+
+                <div class="form-group">
+                    <h4 th:text="#{sToAdd}"></h4>
+                    <input class="form-control" th:field="*{moneyToAdd}">
+                    <span th:errors="*{moneyToAdd}" class="error"></span>
+                </div>
+
+
+                <button type="submit" value="Sign In" class="btn btn-info"
+                        style="margin-top:30px"
+                        ng-disabled="form.$invalid" th:text="#{addSum}">
+                    add money
+                </button>
+            </form>
+
+
+        </div>
+        <script type="text/javascript" src="/js/locale.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+                integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+                crossorigin="anonymous"></script>
+    </body>
+</html>

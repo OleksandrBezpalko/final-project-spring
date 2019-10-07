@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <th:block th:include="/navigationBarMainPage"></th:block>
+    <div class="row">
+        <h1>[[ #{userId} ]] - [[ ${user.id} ]]</h1>
+    </div>
+    <div class="row mt-3">
+        <form action="/user" method="post">
+            <div class="form-group">
+                <label class="mr-1" style="font-weight: 600;" for="username">[[ #{userName} ]]</label>
+                <input class="form-control mb-4" type="text" name="username" th:value="${user.username}">
+            </div>
+            <div th:each="role: ${roles}">
+                <label th:unless="${role.name() == 'USER'}"><input type="checkbox" th:name="${role}" th:checked="${#lists.contains(user.roles, role)}">[[ ${role} ]]</label>
+            </div>
+            <input type="hidden" th:value="${user.id}" name="userId">
+            <input type="hidden" th:value="${_csrf.token}" name="_csrf">
+            <button type="submit" class="btn btn-info btn-lg mt-3">Save</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/locale.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

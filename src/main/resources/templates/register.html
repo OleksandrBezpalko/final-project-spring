@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{register}">Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/b5261b4160.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <!--    <script type="text/javascript" src="/js/angular.min.js"></script>-->
+</head>
+<body ng-app="login_form" ng-controller="AppCtrl">
+
+<div class="container">
+
+    <th:block th:include="/navigationBarMainPage"></th:block>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 th:text="#{regForm}">Registration form</h1>
+            <h3 th:unless="${message==null}" th:text="#{message}" style="color: red">error message</h3>
+            <form style="margin-bottom: 30px" name="form" th:action="@{/registration}" autocomplete="off" method="post"
+                  novalidate ng-submit="form.$valid && sendForm(auth)">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" th:text="#{userName}">Username</label>
+                    <input type="text"
+                           name="username"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           required
+                           ng-model="auth.email">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1" th:text="#{lastName}">Last Name</label>
+                    <input type="text"
+                           class="form-control"
+                           name="lastName"
+                           id="exampleInputLN1"
+                           required
+                           ng-model="auth.lastName">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" th:text="#{pswrd}">Password</label>
+                    <input type="password"
+                           class="form-control"
+                           name="password"
+                           id="exampleInputPassword1"
+                           required
+                           ng-model="auth.password">
+                </div>
+                <recaptcha sitekey="6LdbaasUAAAAAP_6lZxFvT2SOD_C7GGQIRq-Rs3u"
+                           ng-model="auth.recaptchaResponse">
+                </recaptcha>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <button type="submit" value="Registrate" class="btn btn-info" style="margin-top:30px"
+                        ng-disabled="form.$invalid" ng-click="getUser()" th:text="#{register}">
+                    Enter
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/locale.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

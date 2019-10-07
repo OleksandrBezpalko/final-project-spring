@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+
+    <body>
+
+
+        <div class="container">
+            <th:block th:include="/navigationBarMainPage"></th:block>
+            <h3 th:unless="${notEnought}==null" style="color: red" th:text="#{notEnought}+' '+${notEnought}"></h3>
+            <h1>[[ #{orderNum} ]]: [[ ${index} ]]</h1>
+            <table class="table table-bordered">
+                <tr>
+                    <thead class="thead-dark">
+                        <th th:text="#{dish}">name of Dish</th>
+                        <th th:text="#{price}">price of dish</th>
+                        <th th:text="#{amAdded}">Amount added</th>
+                    </thead>
+                </tr>
+                <tr th:each="entry: ${map}">
+                    <td th:if="#{lang }== '??lang_en??'" th:text="${entry.key.name}"></td>
+                    <td th:unless="#{lang }== '??lang_en??'" th:text="${entry.key.nameUkr}"></td>
+                    <td th:text="${entry.key.price}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+
+
+            <h1 th:text="#{price}+' '+${price}"></h1>
+
+
+            <form th:action="@{/checkOrderUser/Confirm}" method="post">
+                <input type="hidden" name="price" th:value="${price}">
+                <button th:if="${notEnought}==null" type="submit" value="Registrate" class="btn btn-dark" name="ind"
+                        th:value="${index}" th:text="#{confirm}">Confirm</button>
+            </form>
+
+        </div>
+        <script type="text/javascript" src="/js/locale.js"></script>
+    </body>
+
+</html>

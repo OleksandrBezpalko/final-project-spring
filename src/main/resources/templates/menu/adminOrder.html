@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+
+        <div class="container">
+            <th:block th:include="/navigationBarMainPage"></th:block>
+            <table class="table table-bordered">
+                <tr>
+                    <thead class="thead-dark">
+                        <th th:text="#{product}" >Назва Продукту</th>
+                        <th th:text="#{amountHave}" >В наявності</th>
+                        <th th:text="#{minAmount}">Мінімальна кількість</th>
+                    </thead>
+                </tr>
+                <tr th:each="product:${products}">
+                    <td th:text="${product.product}"></td>
+                    <td th:text="${product.amountHave}"></td>
+                    <td th:text="${product.minAmount}"></td>
+
+                </tr>
+            </table>
+            <div>
+                <form th:action="@{/replenish_stock_of_products}" method="post">
+
+                    <button type="submit" value="Registrate" class="btn btn btn-info"
+                            style="margin-top:30px;color: darkgreen"
+                            th:text="#{addHave}"    >Поповнить запас</button>
+
+                </form></div>
+
+
+
+            <h3 th:text="#{nonConfAd}" style="margin-top: 20px">Non confirmed orders</h3>
+            <div>
+                <form th:action="@{/checkOrder}" method="get">
+
+                    <button type="submit" value="Registrate" class="btn btn-danger mt-3 mr-3"
+                            name="ind" th:each="indx:${ind}" th:value="${indx}"
+                            th:utext="#{orderNum}+' '+ ${indx}"></button>
+
+                </form></div>
+
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+                integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/js/locale.js"></script>
+    </body>
+</html>

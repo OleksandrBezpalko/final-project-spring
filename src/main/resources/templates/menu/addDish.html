@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <title>Add Dish</title>
+    </head>
+    <body>
+
+        <div class="container">
+            <th:block th:include="/navigationBarMainPage"></th:block>
+            <h1 th:inline="text" style="margin-bottom: 30px"> <text th:text="#{sOfAd}"></text> [[${#httpServletRequest.remoteUser}]]</h1>
+
+
+            <h2 th:text="#{addDish}"></h2>
+            <h3 th:unless="${error==null}" style="color: red" th:text="#{error}"></h3>
+
+            <h3 th:unless="${error1==null}" style="color: red" th:text="#{error1}"></h3>
+            <form th:action="@{/add}" method="post"
+                  style="max-width: 600px;margin-bottom: 30px;margin-top: 50px" ng-submit="form.$valid"
+                  th:object="${dish}" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label th:for="nameUkr" th:text="#{nameUkr}" >Назва укр</label>
+                    <input class="form-control" th:field="*{nameUkr}">
+                    <span th:errors="*{nameUkr}" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label th:for="name" th:text="#{dish}">Назва страви</label>
+                    <input class="form-control" th:field="*{name}">
+                    <span th:errors="*{name}" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label th:for="price" th:text="#{price}">Ціна страви</label>
+                    <input class="form-control" type="number" th:field="*{price}">
+                    <span th:errors="*{price}" class="error"></span>
+
+                </div>
+                <div class="form-group" style="margin-top: 30px; margin-bottom: 30px">
+
+                    <div class="check-box" th:each="prodT:${products}">
+                        <input type="checkbox" name="prod" th:value="${prodT.product}" th:id="${prodT.product}">
+                        <label th:for="${prodT.product}" th:text="${prodT.product}"></label>
+                        <span th:errors="*{productsForDish}" class="error"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="file"  id="file" name="file" multiple>
+                </div>
+
+                <button type="submit" value="Sign In" class="btn btn btn-info"
+                        style="margin-top:30px;margin-left: 10px"
+                        ng-disabled="form.$invalid" th:text="#{addDish}">
+                    add Dish
+                </button>
+            </form>
+            <h2 th:text="#{removeDish}" style="margin-left: 15px"></h2>
+            <form th:action="@{/remove}" method="post">
+                <div class="check-box" th:each="dish:${dishes}">
+                    <input type="checkbox" name="ds" th:value="${dish.id}" th:id="${dish.name}">
+                    <label th:for="${dish.name}" th:text="${dish.name}"></label>
+                </div>
+                <button type="submit" value="Sign In" class="btn btn btn-info"
+                        style="margin-top:30px;margin-left: 15px"
+                        th:text="#{removeDish}">
+                    add Dish
+                </button>
+            </form>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+                integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/js/locale.js"></script>
+    </body>
+</html>
